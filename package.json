@@ -1,0 +1,20 @@
+{
+  "name": "api-nba-vis",
+  "version": "1.0.0",
+  "description": "API for NBA Visualisation",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/mjstobo/api-nba-vis"
+  },
+  "author": "mjstobo.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.5.1"
+  }
+}
