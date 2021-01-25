@@ -63,8 +63,27 @@ const getPlayers = (request, response) => {
   });
 };
 
+const getSinglePlayer = (request, response) => {
+  const playerJson = request.body.player_id;
+  console.log(playerJson);
+
+  pool.query(
+    "SELECT * FROM players WHERE player_id = $1",
+    [playerJson],
+    (error, result) => {
+      if (error) {
+        throw error;
+      } else {
+        console.log(result);
+        response.status(200).json(result.rows[0]);
+      }
+    }
+  );
+};
+
 module.exports = {
   createTeam,
   createPlayer,
   getPlayers,
+  getSinglePlayer,
 };

@@ -18,6 +18,7 @@ app.get("/", (request, response) => {
 app.post("/team", db.createTeam);
 app.post("/players", db.createPlayer);
 app.get("/players", db.getPlayers);
+app.get("/player", db.getSinglePlayer);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
