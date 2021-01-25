@@ -33,6 +33,26 @@ const createTeam = (request, response) => {
   response.status(200).send();
 };
 
+const getTeam = (request, response) => {
+  const teamJson = request.body.team_id;
+
+  if (Number.isInteger(teamJson)) {
+    pool.query(
+      "SELECT * FROM teams WHERE team_id = $1",
+      [teamJson],
+      (error, result) => {
+        if (error) {
+          throw error;
+        } else {
+          response.status(200).json(result.rows[0]);
+        }
+      }
+    );
+  } else {
+    response.status(400).send("Invalid request");
+  }
+};
+
 const createPlayer = (request, response) => {
   const playersJson = request.body;
 
@@ -53,7 +73,7 @@ const createPlayer = (request, response) => {
   response.status(200).send();
 };
 
-const getPlayers = (request, response) => {
+const getAllPlayers = (request, response) => {
   pool.query("SELECT * FROM players", (error, result) => {
     if (error) {
       throw error;
@@ -63,27 +83,34 @@ const getPlayers = (request, response) => {
   });
 };
 
-const getSinglePlayer = (request, response) => {
+const getPlayer = (request, response) => {
   const playerJson = request.body.player_id;
-  console.log(playerJson);
 
-  pool.query(
-    "SELECT * FROM players WHERE player_id = $1",
-    [playerJson],
-    (error, result) => {
-      if (error) {
-        throw error;
-      } else {
-        console.log(result);
-        response.status(200).json(result.rows[0]);
+  if (Number.isInteger(playerJson)) {
+    pool.query(
+      "SELECT * FROM players WHERE player_id = $1",
+      [playerJson],
+      (error, result) => {
+        if (error) {
+          throw error;
+        } else {
+          if (result.rows[0]) {
+            response.status(200).json(result.rows[0]);
+          } else {
+            response.status(400).json("Player not found");
+          }
+        }
       }
-    }
-  );
+    );
+  } else {
+    response.status(400).json("Invalid request");
+  }
 };
 
 module.exports = {
   createTeam,
   createPlayer,
-  getPlayers,
-  getSinglePlayer,
+  getAllPlayers,
+  getPlayer,
+  getTeam,
 };

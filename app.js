@@ -12,13 +12,16 @@ app.use(
 );
 
 app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
+  response.json({
+    info: "Node.js, Express, and Postgres API",
+  });
 });
 
 app.post("/team", db.createTeam);
 app.post("/players", db.createPlayer);
-app.get("/players", db.getPlayers);
-app.get("/player", db.getSinglePlayer);
+app.get("/players", db.getAllPlayers);
+app.get("/player", db.getPlayer);
+app.get("/team", db.getTeam);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
